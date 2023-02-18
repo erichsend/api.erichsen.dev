@@ -1,19 +1,19 @@
-# argocd-apps.yaml
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: argocd-apps
+  name: konnect-kong
 spec:
-  destination:
-    namespace: argocd
-    name: in-cluster
   project: default
   source:
-    path: argocd/apps/
+    path: konnect-kong/
     repoURL: 'https://github.com/erichsend/api.erichsen.dev'
     targetRevision: HEAD
-    directory:
-      recurse: true
+    helm:
+      valueFiles:
+      - values.yaml
+  destination:
+    namespace: konect-kong
+    name: in-cluster
   syncPolicy:
     syncOptions:
     - CreateNamespace=true
