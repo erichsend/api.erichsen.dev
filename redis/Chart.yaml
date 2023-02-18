@@ -1,0 +1,13 @@
+# Chart.yaml
+apiVersion: v2
+name: konnect-kong-redis
+version: 17.7.5
+appVersion: 7.0.8
+description: Redis to back konnect'd kong
+sources:
+  - https://github.com/bitnami/charts
+type: application
+dependencies:
+  - name: redis
+    version: 17.7.5
+    repository: https://charts.bitnami.com/bitnami
