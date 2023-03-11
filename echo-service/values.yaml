@@ -1,0 +1,25 @@
+replicaCount: 1
+
+image:
+  repository: gcr.io/kubernetes-e2e-test-images/echoserver
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 8080
+
+ingress:
+  enabled: true
+  className: "kong"
+  annotations:
+    konghq.com/strip-path: 'true'
+  hosts:
+    - host: kic.erichsen.dev
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls:
+    - secretName: kic-erichsen-dev-tls
+      hosts:
+        - kic.erichsen.dev
+
