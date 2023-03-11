@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: echo-service
+spec:
+  project: default
+  source:
+    path: echo-service/
+    repoURL: 'https://github.com/erichsend/api.erichsen.dev'
+    targetRevision: HEAD
+    helm:
+      valueFiles:
+      - values.yaml
+  destination:
+    namespace: echo
+    name: in-cluster
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true

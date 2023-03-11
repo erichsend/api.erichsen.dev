@@ -1,0 +1,48 @@
+replicaCount: 1
+
+image:
+  repository: gcr.io/kubernetes-e2e-test-images/echoserver
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "2.2"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+
+service:
+  type: ClusterIP
+  lowPort: 80
+  highPort: 8080
+  port: 80
+
+ingress:
+  enabled: true
+  className: "kong"
+  annotations:
+    konghq.com/strip-path: 'true'
+  hosts:
+    - host: kic.erichsen.dev
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: echo-service
+              port: 8080
+  tls:
+    - secretName: kic-erichsen-dev-tls
+      hosts:
+        - kic.erichsen.dev
+
