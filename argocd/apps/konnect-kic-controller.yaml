@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: konnect-kic-controller
+spec:
+  project: default
+  source:
+    path: konnect-kic-controller/
+    repoURL: 'https://github.com/erichsend/api.erichsen.dev'
+    targetRevision: HEAD
+    helm:
+      valueFiles:
+      - values.yaml
+  destination:
+    namespace: konnect-kic
+    name: in-cluster
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
