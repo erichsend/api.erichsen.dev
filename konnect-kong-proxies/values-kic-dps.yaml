@@ -1,0 +1,30 @@
+dependencies:
+  redis:
+    enabled: true
+
+kong:
+  admin:
+    enabled: true
+    type: ClusterIP
+    clusterIP: None
+
+  image:
+    repository: kong/kong-gateway
+    tag: "3.2"
+
+  ingressController:
+    enabled: false
+
+  replicaCount: 3
+
+redis:
+  architecture: standalone
+  auth:
+    passwordSecret: "redis-password"
+  resources:
+    requests:
+      memory: "64Mi"
+      cpu: "50m"
+    limits:
+      memory: "128Mi"
+      cpu: "100m"

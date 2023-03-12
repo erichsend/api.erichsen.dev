@@ -1,3 +1,7 @@
+dependencies:
+  redis:
+    enabled: false
+
 kong:
   deployment:
     kong:
@@ -23,15 +27,3 @@ kong:
       tlsClientSecretName: konnect-client-tls
       runtimeGroupID: "3578a240-3f58-46cb-bce1-aa60715f344a"
       apiHostname: "us.kic.api.konghq.com"
-
-redis:
-  architecture: standalone
-  auth:
-    passwordSecret: "redis-password"
-  resources:
-    requests:
-      memory: "64Mi"
-      cpu: "50m"
-    limits:
-      memory: "128Mi"
-      cpu: "100m"
