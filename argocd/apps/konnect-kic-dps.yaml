@@ -5,12 +5,12 @@ metadata:
 spec:
   project: default
   source:
-    path: konnect-kic-dps/
+    path: konnect-kong-proxies/
     repoURL: 'https://github.com/erichsend/api.erichsen.dev'
     targetRevision: HEAD
     helm:
       valueFiles:
-      - values.yaml
+      - values-kic-dps.yaml
   destination:
     namespace: konnect-kic
     name: in-cluster

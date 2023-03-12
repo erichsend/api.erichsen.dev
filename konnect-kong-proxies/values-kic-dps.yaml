@@ -1,3 +1,7 @@
+dependencies:
+  redis:
+    enabled: false
+
 kong:
   admin:
     enabled: true
