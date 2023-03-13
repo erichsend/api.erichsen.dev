@@ -8,6 +8,10 @@ kong:
     type: ClusterIP
     clusterIP: None
 
+  proxy:
+    annotations:
+      external-dns.alpha.kubernetes.io/hostname: kic.erichsen.dev
+
   image:
     repository: kong/kong-gateway
     tag: "3.2"

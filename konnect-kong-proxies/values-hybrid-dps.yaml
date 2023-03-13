@@ -6,13 +6,17 @@ kong:
   image:
     repository: kong/kong-gateway
     tag: "3.1.1.3"
-  
+
   secretVolumes:
   - kong-cluster-cert
-  
+
   admin:
     enabled: false
-  
+
+  proxy:
+    annotations:
+      external-dns.alpha.kubernetes.io/hostname: api.erichsen.dev
+
   env:
     role: data_plane
     database: "off"
