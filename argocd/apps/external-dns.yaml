@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: external-dns
+spec:
+  project: default
+  source:
+    path: external-dns/
+    repoURL: 'https://github.com/erichsend/api.erichsen.dev'
+    targetRevision: HEAD
+    helm:
+      valueFiles:
+      - values.yaml
+  destination:
+    namespace: external-dns
+    name: in-cluster
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
