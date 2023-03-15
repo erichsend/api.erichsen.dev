@@ -24,9 +24,9 @@ kong:
 
     konnect:
       enabled: true
-      runtimeGroupID: "42211dd3-9074-4f80-9c80-efe64dbafa0b"
-      tlsClientCertSecretName: konnect-client-tls
-      apiHostname: "us.kic.api.konghq.tech"
+      tlsClientSecretName: konnect-client-tls
+      runtimeGroupID: "3578a240-3f58-46cb-bce1-aa60715f344a"
+      apiHostname: "us.kic.api.konghq.com"
 
 redis:
   architecture: standalone
