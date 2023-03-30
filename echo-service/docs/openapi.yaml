@@ -1,0 +1,85 @@
+openapi: 3.1.0
+info:
+  title: Echo API
+  version: 1.0.0
+servers:
+  - url: https://api.erichsen.dev
+paths:
+  /:
+    get:
+      summary: Get echo of the client's request
+      responses:
+        '200':
+          description: Successfully returned the client's request information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestInfo'
+components:
+  schemas:
+    RequestInfo:
+      type: object
+      properties:
+        hostname:
+          type: string
+          example: echo-service-69d4cbd885-w8hjs
+        podInformation:
+          type: string
+          example: "-no pod information available-"
+        serverValues:
+          type: object
+          properties:
+            serverVersion:
+              type: string
+              example: "nginx: 1.12.2 - lua: 10010"
+        requestInformation:
+          type: object
+          properties:
+            clientAddress:
+              type: string
+              example: 10.2.0.64
+            method:
+              type: string
+              example: GET
+            realPath:
+              type: string
+              example: /
+            query:
+              type: string
+              example: ""
+            requestVersion:
+              type: string
+              example: "1.1"
+            requestScheme:
+              type: string
+              example: http
+            requestUri:
+              type: string
+              example: "http://echo-service.echo:8080/"
+        requestHeaders:
+          type: object
+          additionalProperties:
+            type: string
+          example:
+            accept: "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8"
+            accept-encoding: "gzip, deflate, br"
+            accept-language: "en-US,en;q=0.5"
+            connection: "keep-alive"
+            cookie: "ajs_anonymous_id=14cbf97c-1753-4c4f-bc01-91250de744fb; _ga=GA1.2.999531074.1676677861; userStatus=active"
+            host: "echo-service.echo:8080"
+            sec-fetch-dest: "document"
+            sec-fetch-mode: "navigate"
+            sec-fetch-site: "none"
+            sec-fetch-user: "?1"
+            te: "trailers"
+            upgrade-insecure-requests: "1"
+            user-agent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko/20100101 Firefox/111.0"
+            x-forwarded-for: "10.2.1.1"
+            x-forwarded-host: "api.erichsen.dev"
+            x-forwarded-path: "/"
+            x-forwarded-port: "443"
+            x-forwarded-proto: "https"
+            x-real-ip: "10.2.1.1"
+        requestBody:
+          type: string
+          example: "-no body in request-"
