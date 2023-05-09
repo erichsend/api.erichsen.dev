@@ -13,9 +13,9 @@ kong:
   ingressController:
     enabled: true
     image:
-      repository: kong/kubernetes-ingress-controller
-      tag:  "2.9.0-rc.1"
-      effectiveSemver: "2.9.0"
+      repository: kong/nightly-ingress-controller
+      tag:  "2023-04-26"
+      effectiveSemver: "v2.10.0"
 
     gatewayDiscovery:
       enabled: true
@@ -25,5 +25,5 @@ kong:
     konnect:
       enabled: true
       tlsClientSecretName: konnect-client-tls
-      runtimeGroupID: "3578a240-3f58-46cb-bce1-aa60715f344a"
+      runtimeGroupID: "a36c3b74-d858-46d9-9d66-34dcf9ea9c73"
       apiHostname: "us.kic.api.konghq.com"

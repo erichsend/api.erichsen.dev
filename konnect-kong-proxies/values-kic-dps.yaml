@@ -8,18 +8,33 @@ kong:
     type: ClusterIP
     clusterIP: None
 
+  secretVolumes:
+  - konnect-client-tls
+
   proxy:
     annotations:
       external-dns.alpha.kubernetes.io/hostname: kic.erichsen.dev
 
   image:
-    repository: kong/kong-gateway
-    tag: "3.2"
+    repository: kong/kong-gateway-dev
+    tag: "master@sha256:322eb0f0b93f7823db47299a27724927409956826773778520c840fe07eb5ab9"
 
   ingressController:
     enabled: false
 
   replicaCount: 3
+
+  env:
+    role: traditional
+    database: "off"
+    konnect_mode: "on"
+    vitals: "off"
+    cluster_mtls: pki
+    cluster_cert: /etc/secrets/konnect-client-tls/tls.crt
+    cluster_cert_key: /etc/secrets/konnect-client-tls/tls.key
+    lua_ssl_trusted_certificate: system
+    cluster_telemetry_endpoint: "b2ed883aab.us.tp0.konghq.com:443"
+    cluster_telemetry_server_name: "b2ed883aab.us.tp0.konghq.com"
 
 redis:
   architecture: standalone
