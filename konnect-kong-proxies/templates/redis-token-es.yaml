@@ -1,0 +1,18 @@
+{{- if .Values.dependencies.redis.enabled -}}
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: redis-password
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    name: aws-parameter-store
+    kind: ClusterSecretStore
+  target:
+    name: redis-password
+    creationPolicy: Owner
+  data:
+  - secretKey: redis-password
+    remoteRef:
+      key: /konnect/redis-password
+{{- end }}

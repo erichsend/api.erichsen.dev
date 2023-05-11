@@ -1,3 +1,5 @@
+requireClusterCert: false
+
 dependencies:
   redis:
     enabled: false

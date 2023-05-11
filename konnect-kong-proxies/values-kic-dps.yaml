@@ -1,3 +1,5 @@
+requireClusterCert: true
+
 dependencies:
   redis:
     enabled: true
@@ -9,7 +11,7 @@ kong:
     clusterIP: None
 
   secretVolumes:
-  - konnect-client-tls
+  - cluster-cert
 
   proxy:
     annotations:
@@ -30,8 +32,8 @@ kong:
     konnect_mode: "on"
     vitals: "off"
     cluster_mtls: pki
-    cluster_cert: /etc/secrets/konnect-client-tls/tls.crt
-    cluster_cert_key: /etc/secrets/konnect-client-tls/tls.key
+    cluster_cert: /etc/secrets/cluster-cert/tls.crt
+    cluster_cert_key: /etc/secrets/cluster-cert/tls.key
     lua_ssl_trusted_certificate: system
     cluster_telemetry_endpoint: "b2ed883aab.us.tp0.konghq.com:443"
     cluster_telemetry_server_name: "b2ed883aab.us.tp0.konghq.com"
@@ -39,7 +41,8 @@ kong:
 redis:
   architecture: standalone
   auth:
-    passwordSecret: "redis-password"
+    existingSecret: redis-password
+    existingSecretKey: redis-password
   resources:
     requests:
       memory: "64Mi"

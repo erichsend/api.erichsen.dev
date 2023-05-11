@@ -1,4 +1,4 @@
 external-dns:
   provider: linode
   linode:
-    secretName: linode-api-key
+    secretName: linode-api-token

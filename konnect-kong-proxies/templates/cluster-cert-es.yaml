@@ -1,0 +1,21 @@
+{{- if .Values.requireClusterCert -}}
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: cluster-cert
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    name: aws-parameter-store
+    kind: ClusterSecretStore
+  target:
+    name: cluster-cert
+    creationPolicy: Owner
+  data:
+  - secretKey: tls.crt
+    remoteRef:
+      key: /konnect/tls.crt
+  - secretKey: tls.key
+    remoteRef:
+      key: /konnect/tls.key
+{{- end }}

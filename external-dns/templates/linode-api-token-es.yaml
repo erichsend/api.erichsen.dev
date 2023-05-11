@@ -1,0 +1,16 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: linode-api-token
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    name: aws-parameter-store
+    kind: ClusterSecretStore
+  target:
+    name: linode-api-token
+    creationPolicy: Owner
+  data:
+  - secretKey: linode_api_token
+    remoteRef:
+      key: /linode/linode_api_token
