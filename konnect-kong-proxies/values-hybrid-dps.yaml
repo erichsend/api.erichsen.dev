@@ -1,4 +1,5 @@
-requireClusterCert: true
+secrets:
+  clusterCert: true
 
 dependencies:
   redis:

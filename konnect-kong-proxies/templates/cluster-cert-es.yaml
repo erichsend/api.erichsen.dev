@@ -1,4 +1,4 @@
-{{- if .Values.requireClusterCert -}}
+{{- if .Values.secrets.clusterCert -}}
 apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:

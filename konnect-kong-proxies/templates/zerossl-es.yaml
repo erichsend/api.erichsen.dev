@@ -1,0 +1,35 @@
+{{- if .Values.secrets.zeroSSL -}}
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: zerossl-eab-hmac-key
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    name: aws-parameter-store
+    kind: ClusterSecretStore
+  target:
+    name: zerossl-eab-hmac-key
+    creationPolicy: Owner
+  data:
+  - secretKey: zerossl-eab-hmac-key
+    remoteRef:
+      key: /zerossl/eab_hmac_key
+---
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: zerossl-eab-kid
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    name: aws-parameter-store
+    kind: ClusterSecretStore
+  target:
+    name: zerossl-eab-kid
+    creationPolicy: Owner
+  data:
+  - secretKey: zerossl-eab-kid
+    remoteRef:
+      key: /zerossl/eab_kid
+{{- end }}

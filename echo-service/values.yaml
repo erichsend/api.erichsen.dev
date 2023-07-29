@@ -18,8 +18,3 @@ ingress:
       paths:
         - path: /
           pathType: ImplementationSpecific
-  tls:
-    - secretName: kic-erichsen-dev-tls
-      hosts:
-        - kic.erichsen.dev
-
