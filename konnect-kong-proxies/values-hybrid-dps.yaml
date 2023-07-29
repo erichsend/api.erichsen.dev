@@ -7,7 +7,7 @@ dependencies:
 kong:
   image:
     repository: kong/kong-gateway
-    tag: "3.2"
+    tag: "3.3"
 
   secretVolumes:
   - cluster-cert

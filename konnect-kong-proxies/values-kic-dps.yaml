@@ -18,8 +18,8 @@ kong:
       external-dns.alpha.kubernetes.io/hostname: kic.erichsen.dev
 
   image:
-    repository: kong/kong-gateway-dev
-    tag: "master@sha256:322eb0f0b93f7823db47299a27724927409956826773778520c840fe07eb5ab9"
+    repository: kong/kong-gateway
+    tag: "3.3"
 
   ingressController:
     enabled: false
