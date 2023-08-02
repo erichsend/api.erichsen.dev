@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kong-mesh
+spec:
+  project: default
+  source:
+    path: kong-mesh/
+    repoURL: 'https://github.com/erichsend/api.erichsen.dev'
+    targetRevision: HEAD
+    helm:
+      valueFiles:
+      - values.yaml
+  destination:
+    namespace: kong-mesh-system
+    name: in-cluster
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true

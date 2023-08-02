@@ -1,0 +1,12 @@
+apiVersion: v2
+name: kong-mesh
+version: 2.3.1
+appVersion: 2.3.1
+description: Kong Mesh with Konnect
+sources:
+  - https://kong.github.io/kong-mesh-charts
+type: application
+dependencies:
+  - name: kong-mesh
+    version: 2.3.1
+    repository: https://kong.github.io/kong-mesh-charts

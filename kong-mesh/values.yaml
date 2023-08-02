@@ -1,0 +1,18 @@
+kong-mesh:
+  kuma:
+    controlPlane:
+      mode: zone
+      zone: lke
+      kdsGlobalAddress: grpcs://us.mesh.sync.konghq.com:443
+      konnect:
+        cpId: 61a4717d-1f3c-4762-a18b-7df5da6a0dc1
+      secrets:
+        - Env: KMESH_MULTIZONE_ZONE_KDS_AUTH_CP_TOKEN_INLINE
+          Secret: cp-token
+          Key: token
+    ingress:
+      enabled: true
+    egress:
+      enabled: true
+    experimental:
+      deltaKds: true
