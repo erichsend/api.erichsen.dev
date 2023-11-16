@@ -4,6 +4,9 @@ image:
   repository: gcr.io/kubernetes-e2e-test-images/echoserver
   pullPolicy: IfNotPresent
 
+annotations:
+  konghq.com/plugins: rate-limiting-example
+
 service:
   type: ClusterIP
   port: 8080

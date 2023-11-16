@@ -1,0 +1,13 @@
+{{- if .Values.ingress.enabled -}}
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: rate-limiting-example
+  annotations:
+    kubernetes.io/ingress.class: kong
+plugin: rate-limiting
+config:
+  minute: 5
+  hour: 10000
+  policy: local
+{{- end }}
