@@ -1,4 +1,6 @@
-requireClusterCert: false
+secrets:
+  clusterCert: false
+  zeroSSL: false
 
 dependencies:
   redis:
