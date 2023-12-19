@@ -9,7 +9,7 @@ annotations:
 
 service:
   type: ClusterIP
-  port: 8080
+  port: 8443
 
 ingress:
   enabled: true
