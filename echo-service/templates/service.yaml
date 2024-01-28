@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: {{ include "echo-service.fullname" . }}
   annotations:
-    {{- include "echo-service.annorations" . | nindent 4 }}
+    {{- include "echo-service.annotations" . | nindent 4 }}
   labels:
     {{- include "echo-service.labels" . | nindent 4 }}
 spec:
