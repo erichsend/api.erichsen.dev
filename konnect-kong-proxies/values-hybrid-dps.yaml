@@ -1,5 +1,6 @@
 secrets:
   clusterCert: true
+  zeroSSL: true
 
 dependencies:
   redis:
@@ -33,11 +34,28 @@ kong:
     lua_ssl_trusted_certificate: system
     konnect_mode: "on"
     vitals: "off"
-  
+
+  customEnv:
+    redis_password:
+      valueFrom:
+        secretKeyRef:
+          name: redis-password
+          key: redis-password
+    zerossl_eab_hmac_key:
+      valueFrom:
+        secretKeyRef:
+          name: zerossl-eab-hmac-key
+          key: zerossl-eab-hmac-key
+    zerossl_eab_kid:
+      valueFrom:
+        secretKeyRef:
+          name: zerossl-eab-kid
+          key: zerossl-eab-kid
+
   ingressController:
     enabled: false
     installCRDs: false
-  
+
   replicaCount: 2
 
 redis:
