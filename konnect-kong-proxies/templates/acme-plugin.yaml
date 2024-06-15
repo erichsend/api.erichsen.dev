@@ -10,11 +10,9 @@ metadata:
     global: "true"
 config:
   account_email: dave.erichsen@gmail.com
+  tos_accepted: true
   domains:
     - kic.erichsen.dev
-  api_uri: https://acme.zerossl.com/v2/DV90
-  eab_hmac_key: "{vault://env/ZEROSSL_EAB_HMAC_KEY}"
-  eab_kid: "{vault://env/ZEROSSL_EAB_KID}"
   storage: redis
   storage_config:
     redis:
@@ -22,7 +20,7 @@ config:
       database: 0
       host: konnect-kic-dps-redis-master
       namespace: ""
-      port: null
+      port: 6379
       ssl: false
       ssl_server_name: null
       ssl_verify: false
