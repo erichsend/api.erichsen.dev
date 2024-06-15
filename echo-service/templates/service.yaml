@@ -2,10 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: {{ include "echo-service.fullname" . }}
-  annotations:
-    {{- include "echo-service.annotations" . | nindent 4 }}
-  labels:
-    {{- include "echo-service.labels" . | nindent 4 }}
+  annotations: {{- include "echo-service.annotations" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
   ports:
