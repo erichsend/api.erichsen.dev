@@ -9,10 +9,10 @@ dependencies:
 kong:
   image:
     repository: kong/kong-gateway
-    tag: "3.3"
+    tag: "3.7"
 
   secretVolumes:
-  - cluster-cert
+    - cluster-cert
 
   admin:
     enabled: false
