@@ -1,0 +1,111 @@
+name: Bootstrap Cluster
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install the Linode CLI
+        uses: linode/action-linode-cli@v1
+        with:
+          token: ${{ secrets.LINODE_API_TOKEN }}
+
+      - name: Install kubectl
+        run: |
+          curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+          chmod +x ./kubectl
+          mv ./kubectl /usr/local/bin/kubectl
+
+      - name: Install ArgoCD CLI
+        run: |
+          curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
+          sudo install -m 555 argocd-linux-amd64 /usr/local/bin/argocd
+          rm argocd-linux-amd64
+
+      - name: Create LKE Cluster and Set Cluster ID
+        id: create_cluster
+        run: echo "CLUSTER_ID=$(linode-cli lke cluster-create --label my-third-cluster --region us-central --k8s_version 1.29 --node_pools.type g6-standard-2 --node_pools.count 3 --json | jq -r '.[].id')" >> $GITHUB_ENV
+
+      - name: Wait for Cluster to be Ready
+        run: |
+          while linode-cli lke kubeconfig-view $CLUSTER_ID --json 2>&1 | grep -Eq '"Not found"|Cluster kubeconfig is not yet available. Please try again later.'; do
+            echo "Waiting for the Kubernetes cluster to be ready..."
+            sleep 30
+          done
+
+      - name: Get Kubeconfig
+        id: get_kubeconfig
+        run: |
+          mkdir -p $HOME/.kube
+          linode-cli lke kubeconfig-view $CLUSTER_ID --json | jq -r '.[].kubeconfig' | base64 -d > $HOME/.kube/config
+
+      - name: Create AWS SSM Credentials Secret
+        run: |
+          kubectl create namespace external-secrets
+          kubectl create secret generic aws-ssm \
+            --from-literal=AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }} \
+            --from-literal=AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} \
+            -n external-secrets
+
+      - name: Install ArgoCD on Cluster
+        run: |
+          kubectl create namespace argocd
+          kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/core-install.yaml
+
+      - name: Set kubectl context to argocd namespace
+        run: kubectl config set-context --current --namespace=argocd
+
+      - name: Login to Argo CD
+        run: argocd login --core
+
+      - name: Wait for Argo CD Default Project
+        run: |
+          until argocd proj list | grep -q "default"; do
+            echo "Waiting for Argo CD default project to become available..."
+            sleep 10
+          done
+
+          # Once the default project is ready, it seems Argo needs a little more time before it's ready to sync
+          sleep 30
+
+      - name: Add and Sync App of Apps
+        run: |
+          kubectl apply -n argocd -f argocd/apps/argocd-apps.yaml
+          argocd app sync argocd-apps
+          argocd app wait argocd-apps
+
+      - name: Sync External Secrets
+        run: |
+          argocd app sync external-secrets
+          argocd app wait external-secrets
+
+      - name: Sync External DNS
+        run: |
+          argocd app sync external-dns
+          argocd app wait external-dns
+
+      - name: Sync Konnect Mesh
+        run: |
+          argocd app sync kong-mesh
+
+      - name: Sync Konnect KIC
+        run: |
+          argocd app sync konnect-kic-dps
+          argocd app sync konnect-kic-controller
+          argocd app wait konnect-kic-dps
+
+      - name: Sync Konnect Kong
+        run: |
+          argocd app sync konnect-kong
+          argocd app wait konnect-kong
+
+      - name: Sync Echo Service
+        run: |
+          argocd app sync echo-service
+          argocd app wait echo-service
