@@ -28,6 +28,6 @@ kong:
       enabled: true
       license:
         enabled: true
-      tlsClientSecretName: konnect-client-tls
+      tlsClientCertSecretName: cluster-cert
       runtimeGroupID: "a36c3b74-d858-46d9-9d66-34dcf9ea9c73"
       apiHostname: "us.kic.api.konghq.com"
