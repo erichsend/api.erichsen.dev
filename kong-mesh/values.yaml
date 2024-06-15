@@ -11,7 +11,7 @@ kong-mesh:
           Secret: cp-token
           Key: token
     ingress:
-      enabled: true
+      enabled: false
     egress:
       enabled: true
     experimental:
