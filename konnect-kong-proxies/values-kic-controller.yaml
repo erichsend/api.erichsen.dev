@@ -18,10 +18,7 @@ kong:
     enabled: true
     image:
       repository: kong/kubernetes-ingress-controller
-      tag:  "2.10.4"
-    env:
-      feature_gates: "FillIDs=true"
-
+      tag: "3.2"
     gatewayDiscovery:
       enabled: true
       adminApiService:
