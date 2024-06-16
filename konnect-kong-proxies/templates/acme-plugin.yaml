@@ -10,9 +10,11 @@ metadata:
     global: "true"
 config:
   account_email: dave.erichsen@gmail.com
-  tos_accepted: true
   domains:
     - kic.erichsen.dev
+  api_uri: https://acme.zerossl.com/v2/DV90
+  eab_hmac_key: "{vault://env/ZEROSSL_EAB_HMAC_KEY}"
+  eab_kid: "{vault://env/ZEROSSL_EAB_KID}"
   storage: redis
   storage_config:
     redis:
