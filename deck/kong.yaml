@@ -2,199 +2,250 @@ _format_version: "3.0"
 _konnect:
   control_plane_name: api.erichsen.dev
 plugins:
-- config:
-    account_email: dave.erichsen@gmail.com
-    account_key: null
-    allow_any_domain: true
-    api_uri: https://acme.zerossl.com/v2/DV90
-    cert_type: rsa
-    domains: []
-    eab_hmac_key: '{vault://env/ZEROSSL_EAB_HMAC_KEY}'
-    eab_kid: '{vault://env/ZEROSSL_EAB_KID}'
-    enable_ipv4_common_name: true
-    fail_backoff_minutes: 5
-    preferred_chain: null
-    renew_threshold_days: 14
-    rsa_key_size: 4096
-    storage: redis
-    storage_config:
-      consul:
-        host: null
-        https: false
-        kv_path: null
-        port: null
-        timeout: null
-        token: null
-      kong: []
-      redis:
-        auth: '{vault://env/REDIS_PASSWORD}'
-        database: 0
-        extra_options:
+  - config:
+      account_email: dave.erichsen@gmail.com
+      account_key: null
+      allow_any_domain: true
+      api_uri: https://acme.zerossl.com/v2/DV90
+      cert_type: rsa
+      domains: []
+      eab_hmac_key: "{vault://env/ZEROSSL_EAB_HMAC_KEY}"
+      eab_kid: "{vault://env/ZEROSSL_EAB_KID}"
+      enable_ipv4_common_name: true
+      fail_backoff_minutes: 5
+      preferred_chain: null
+      renew_threshold_days: 14
+      rsa_key_size: 4096
+      storage: redis
+      storage_config:
+        consul:
+          host: null
+          https: false
+          kv_path: null
+          port: null
+          timeout: null
+          token: null
+        kong: []
+        redis:
+          auth: "{vault://env/REDIS_PASSWORD}"
+          database: 0
+          extra_options:
+            namespace: ""
+            scan_count: 10
+          host: konnect-kong-redis-master
           namespace: ""
+          password: "{vault://env/REDIS_PASSWORD}"
+          port: 6379
           scan_count: 10
-        host: konnect-kong-redis-master
-        namespace: ""
-        password: '{vault://env/REDIS_PASSWORD}'
+          server_name: null
+          ssl: false
+          ssl_server_name: null
+          ssl_verify: false
+          timeout: 2000
+          username: null
+        shm:
+          shm_name: kong
+        vault:
+          auth_method: token
+          auth_path: null
+          auth_role: null
+          host: null
+          https: false
+          jwt_path: null
+          kv_path: null
+          port: null
+          timeout: null
+          tls_server_name: null
+          tls_verify: true
+          token: null
+      tos_accepted: false
+    enabled: true
+    name: acme
+    protocols:
+      - grpc
+      - grpcs
+      - http
+      - https
+  - config:
+      consumer_groups: null
+      dictionary_name: kong_rate_limiting_counters
+      disable_penalty: false
+      enforce_consumer_groups: false
+      error_code: 429
+      error_message: API rate limit exceeded
+      header_name: null
+      hide_client_headers: false
+      identifier: ip
+      limit:
+        - 100
+      namespace: T7BhjP50mHSMNEtXkCY4QfiRe6TthoRn
+      path: null
+      redis:
+        cluster_addresses: null
+        connect_timeout: null
+        database: 1
+        host: konnect-kong-redis-master.konnect-kong.svc.cluster.local
+        keepalive_backlog: null
+        keepalive_pool_size: 30
+        password: "{vault://env/REDIS_PASSWORD}"
         port: 6379
-        scan_count: 10
-        server_name: null
+        read_timeout: null
+        send_timeout: null
+        sentinel_addresses: null
+        sentinel_master: null
+        sentinel_password: null
+        sentinel_role: null
+        sentinel_username: null
+        server_name: konnect-kong-redis-master.konnect-kong.svc.cluster.local
         ssl: false
-        ssl_server_name: null
         ssl_verify: false
         timeout: 2000
         username: null
-      shm:
-        shm_name: kong
-      vault:
-        auth_method: token
-        auth_path: null
-        auth_role: null
-        host: null
-        https: false
-        jwt_path: null
-        kv_path: null
-        port: null
-        timeout: null
-        tls_server_name: null
-        tls_verify: true
-        token: null
-    tos_accepted: false
-  enabled: true
-  name: acme
-  protocols:
-  - grpc
-  - grpcs
-  - http
-  - https
-- config:
-    consumer_groups: null
-    dictionary_name: kong_rate_limiting_counters
-    disable_penalty: false
-    enforce_consumer_groups: false
-    error_code: 429
-    error_message: API rate limit exceeded
-    header_name: null
-    hide_client_headers: false
-    identifier: ip
-    limit:
-    - 100
-    namespace: T7BhjP50mHSMNEtXkCY4QfiRe6TthoRn
-    path: null
-    redis:
-      cluster_addresses: null
-      connect_timeout: null
-      database: 1
-      host: konnect-kong-redis-master.konnect-kong.svc.cluster.local
-      keepalive_backlog: null
-      keepalive_pool_size: 30
-      password: '{vault://env/REDIS_PASSWORD}'
-      port: 6379
-      read_timeout: null
-      send_timeout: null
-      sentinel_addresses: null
-      sentinel_master: null
-      sentinel_password: null
-      sentinel_role: null
-      sentinel_username: null
-      server_name: konnect-kong-redis-master.konnect-kong.svc.cluster.local
-      ssl: false
-      ssl_verify: false
-      timeout: 2000
-      username: null
-    retry_after_jitter_max: 0
-    strategy: redis
-    sync_rate: 5
-    window_size:
-    - 60
-    window_type: sliding
-  enabled: false
-  name: rate-limiting-advanced
-  protocols:
-  - grpc
-  - grpcs
-  - http
-  - https
+      retry_after_jitter_max: 0
+      strategy: redis
+      sync_rate: 5
+      window_size:
+        - 60
+      window_type: sliding
+    enabled: false
+    name: rate-limiting-advanced
+    protocols:
+      - grpc
+      - grpcs
+      - http
+      - https
 routes:
-- https_redirect_status_code: 426
-  name: acme-challenge
-  path_handling: v0
-  paths:
-  - /.well-known/acme-challenge
-  plugins:
-  - config:
-      body: null
-      content_type: null
-      echo: false
-      message: null
-      status_code: 200
-      trigger: null
-    enabled: true
-    name: request-termination
+  - https_redirect_status_code: 426
+    name: acme-challenge
+    path_handling: v0
+    paths:
+      - /.well-known/acme-challenge
+    plugins:
+      - config:
+          body: null
+          content_type: null
+          echo: false
+          message: null
+          status_code: 200
+          trigger: null
+        enabled: true
+        name: request-termination
+        protocols:
+          - grpc
+          - grpcs
+          - http
+          - https
+    preserve_host: false
     protocols:
-    - grpc
-    - grpcs
-    - http
-    - https
-  preserve_host: false
-  protocols:
-  - http
-  - https
-  regex_priority: 0
-  request_buffering: true
-  response_buffering: true
-  strip_path: true
+      - http
+      - https
+    regex_priority: 0
+    request_buffering: true
+    response_buffering: true
+    strip_path: true
 services:
-- connect_timeout: 60000
-  enabled: true
-  host: global.api.konghq.tech
-  name: Konnect
-  port: 443
-  protocol: https
-  read_timeout: 60000
-  retries: 5
-  routes:
-  - https_redirect_status_code: 426
-    name: konnect-proxy
-    path_handling: v0
-    paths:
-    - /konnect
-    preserve_host: false
-    protocols:
-    - http
-    - https
-    regex_priority: 0
-    request_buffering: true
-    response_buffering: true
-    strip_path: true
-  write_timeout: 60000
-- connect_timeout: 60000
-  enabled: true
-  host: echo-service.echo
-  name: echo
-  port: 8080
-  protocol: http
-  read_timeout: 60000
-  retries: 5
-  routes:
-  - https_redirect_status_code: 426
-    name: base
-    path_handling: v0
-    paths:
-    - /
-    preserve_host: false
-    protocols:
-    - https
-    regex_priority: 0
-    request_buffering: true
-    response_buffering: true
-    strip_path: true
-  write_timeout: 60000
-- connect_timeout: 60000
-  enabled: true
-  host: eohdtg8bkt1ua0h.m.pipedream.net
-  name: requestbin
-  port: 443
-  protocol: https
-  read_timeout: 60000
-  retries: 0
-  write_timeout: 60000
+  - connect_timeout: 60000
+    enabled: true
+    host: us.api.konghq.com
+    name: Konnect
+    port: 443
+    protocol: https
+    read_timeout: 60000
+    retries: 5
+    routes:
+      - https_redirect_status_code: 426
+        name: konnect-proxy
+        path_handling: v0
+        paths:
+          - /konnect
+        plugins:
+          - config:
+              add:
+                body: []
+                headers: []
+                json_types: []
+                querystring: []
+              allow:
+                body: null
+              append:
+                body: []
+                headers: []
+                json_types: []
+                querystring: []
+              dots_in_keys: true
+              http_method: null
+              remove:
+                body: []
+                headers: []
+                querystring: []
+              rename:
+                body: []
+                headers: []
+                querystring:
+                  - page[size]:page.size
+              replace:
+                body: []
+                headers: []
+                json_types: []
+                querystring: []
+                uri: null
+            enabled: true
+            name: request-transformer-advanced
+            protocols:
+              - grpc
+              - grpcs
+              - http
+              - https
+        preserve_host: false
+        protocols:
+          - http
+          - https
+        regex_priority: 0
+        request_buffering: true
+        response_buffering: true
+        strip_path: true
+    write_timeout: 60000
+  - connect_timeout: 60000
+    enabled: true
+    host: echo-service.echo
+    name: echo
+    port: 8080
+    protocol: http
+    read_timeout: 60000
+    retries: 5
+    routes:
+      - https_redirect_status_code: 426
+        name: base
+        path_handling: v0
+        paths:
+          - /
+        preserve_host: false
+        protocols:
+          - https
+        regex_priority: 0
+        request_buffering: true
+        response_buffering: true
+        strip_path: true
+      - name: runtime-groups-v2-core-entities
+        paths:
+          - ~/v2/runtime-groups/(?<rgid>\S+?)/core-entities/(?<path>\S+)
+          - ~/v2/control-planes/(?<rgid>\S+?)/core-entities/(?<path>\S+)
+        strip_path: true
+        plugins:
+          - name: request-transformer-advanced
+            config:
+              replace:
+                uri: /api/runtime_groups/$(uri_captures['rgid'])/$(uri_captures['path'])
+              rename:
+                querystring:
+                  - page[size]:page.size
+    write_timeout: 60000
+  - connect_timeout: 60000
+    enabled: true
+    host: eohdtg8bkt1ua0h.m.pipedream.net
+    name: requestbin
+    port: 443
+    protocol: https
+    read_timeout: 60000
+    retries: 0
+    write_timeout: 60000
