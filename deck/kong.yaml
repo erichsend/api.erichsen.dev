@@ -228,8 +228,8 @@ services:
         strip_path: true
       - name: runtime-groups-v2-core-entities
         paths:
-          - ~/v2/runtime-groups/(?<rgid>\S+?)/core-entities/(?<path>\S+)
-          - ~/v2/control-planes/(?<rgid>\S+?)/core-entities/(?<path>\S+)
+          - ~/v2/runtime-groups/(?<rgid>\S+?)/core-entities/(?<path>.+)
+          - ~/v2/control-planes/(?<rgid>\S+?)/core-entities/(?<path>.+)
         strip_path: true
         plugins:
           - name: request-transformer-advanced
