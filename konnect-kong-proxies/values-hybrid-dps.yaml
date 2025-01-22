@@ -34,6 +34,7 @@ kong:
     lua_ssl_trusted_certificate: system
     konnect_mode: "on"
     vitals: "off"
+    router_flavor: "expressions"
 
   customEnv:
     redis_password:
