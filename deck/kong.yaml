@@ -143,6 +143,45 @@ routes:
     request_buffering: true
     response_buffering: true
     strip_path: true
+  - https_redirect_status_code: 426
+    name: hmac_auth
+    path_handling: v0
+    paths:
+      - /hmac_auth/protected
+    preserve_host: false
+    protocols:
+      - http
+      - https
+    regex_priority: 0
+    request_buffering: true
+    response_buffering: true
+    strip_path: true
+    plugins:
+      - config:
+          body: null
+          content_type: null
+          echo: false
+          message: 200 success
+          status_code: 200
+          trigger: null
+        enabled: true
+        name: request-termination
+        protocols:
+          - grpc
+          - grpcs
+          - http
+          - https
+      - config:
+          algorithms:
+            - hmac-sha256
+          anonymous: null
+          clock_skew: 300
+          enforce_headers: []
+          hide_credentials: false
+          realm: null
+          validate_request_body: false
+        enabled: true
+        name: hmac-auth
 services:
   - connect_timeout: 60000
     enabled: true
@@ -282,3 +321,10 @@ services:
               - http
               - https
     write_timeout: 60000
+consumers:
+  - hmacauth_credentials:
+      - secret: boat
+        username: hmac-auth-user
+    tags:
+      - hmac_auth
+    username: hmac-auth-user
