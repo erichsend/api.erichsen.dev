@@ -1,0 +1,26 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: omeka-db-secret
+spec:
+  secretStoreRef:
+    name: aws-parameter-store
+    kind: ClusterSecretStore
+  target:
+    name: omeka-db-secret
+  data:
+    - secretKey: DB_HOST
+      remoteRef:
+        key: /omeka/db/DB_HOST
+    - secretKey: DB_USER
+      remoteRef:
+        key: /omeka/db/DB_USER
+    - secretKey: DB_PASS
+      remoteRef:
+        key: /omeka/db/DB_PASS
+    - secretKey: DB_NAME
+      remoteRef:
+        key: /omeka/db/DB_NAME
+    - secretKey: DB_PORT
+      remoteRef:
+        key: /omeka/db/DB_PORT

@@ -1,0 +1,2 @@
+https://github.com/omeka/plugin-SimplePages,d43e5338500d066f4f9aad70b9da83fc3ee7533f
+https://github.com/omeka/plugin-ExhibitBuilder,f9c2a6c072b1e39474f6d0bf4dc53a46cd1075a2
