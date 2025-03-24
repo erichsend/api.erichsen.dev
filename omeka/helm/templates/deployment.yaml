@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "omeka.fullname" . }}
+  labels:
+    app: {{ include "omeka.name" . }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "omeka.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "omeka.name" . }}
+    spec:
+      containers:
+        - name: omeka
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 80
+          envFrom:
+            - secretRef:
+                name: {{ .Values.secrets.db }}
+            - secretRef:
+                name: {{ .Values.secrets.s3 }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
