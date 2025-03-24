@@ -1,0 +1,23 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: omeka-s3-secret
+spec:
+  secretStoreRef:
+    name: aws-parameter-store
+    kind: ClusterSecretStore
+  target:
+    name: omeka-s3-secret
+  data:
+    - secretKey: S3_BUCKET
+      remoteRef:
+        key: /omeka/s3/S3_BUCKET
+    - secretKey: S3_KEY
+      remoteRef:
+        key: /omeka/s3/S3_KEY
+    - secretKey: S3_SECRET
+      remoteRef:
+        key: /omeka/s3/S3_SECRET
+    - secretKey: S3_REGION
+      remoteRef:
+        key: /omeka/s3/S3_REGION
