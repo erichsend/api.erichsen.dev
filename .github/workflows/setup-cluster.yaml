@@ -30,7 +30,7 @@ jobs:
 
       - name: Create LKE Cluster and Set Cluster ID
         id: create_cluster
-        run: echo "CLUSTER_ID=$(linode-cli lke cluster-create --label my-third-cluster --region us-central --k8s_version 1.29 --node_pools.type g6-standard-2 --node_pools.count 3 --json | jq -r '.[].id')" >> $GITHUB_ENV
+        run: echo "CLUSTER_ID=$(linode-cli lke cluster-create --label my-third-cluster --region us-central --k8s_version 1.29 --node_pools.type g6-standard-2 --node_pools.count 2 --json | jq -r '.[].id')" >> $GITHUB_ENV
 
       - name: Wait for Cluster to be Ready
         run: |
